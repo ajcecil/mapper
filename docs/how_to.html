@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>How to Build Final Project</title>
+    <script type="module"
+      src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js">
+    </script>
+
+    <!-- link out to your CSS -->
+    <link rel="stylesheet" href="final_project_styles.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <a href="final_project.html" class="header-logo-link" target="_blank">
+        <img src="page_files/ajc_logo.png" alt="logo" class="header-logo">
+      </a>
+      <h1>How to Build my Final Project</h1>
+    </header>
+    <nav class="menu-bar">
+    </nav>
+    <div class ="content">
+      <section id="general" class="section-text">
+        <h2>Embedding ArcGIS Online Maps</h2>
+        <p>
+          For this project I used arcgis online to host my map layers, using the mapviewer I was able too embed a mapviewer within my webpage and maintain the bookmarks and legend I want my users too have access to.
+        </p>
+        <img src="page_files\content.png">
+        <p>Above shows the screen which provides detail on a given map in ArcGIS online. Next we open the map.</p>
+        <img src="page_files\map.png">
+        <p>Once the map is open we can save any edits we make or a copy of our own if we are not the author of the map. And select the embed option circled in the above.</p>
+        <img src="page_files\embed_window.png">
+        <p>Once we select the embed option a window will open allowing us to select any options we would like.</p>
+        <img src="page_files\html_source.png">
+        <p>Following the instructions given with the html script we can then introduce the script into our page.</p>
+      </section>
+    </div>
+    <!-- tabs.js to wire up the tab buttons -->
+    <script>
+      document.querySelectorAll('.map-tabs .tab-btn')
+        .forEach(btn => {
+          btn.addEventListener('click', () => {
+            // deactivate all
+            document
+              .querySelectorAll('.map-tabs .tab-btn')
+              .forEach(b => b.classList.remove('active'));
+            document
+              .querySelectorAll('.map-tabs .tab-content')
+              .forEach(c => c.classList.remove('active'));
+
+            // activate the one we clicked
+            btn.classList.add('active');
+            document
+              .getElementById(btn.dataset.target)
+              .classList.add('active');
+          });
+        });
+    </script>
+    <script>
+      const header   = document.querySelector('.header');
+      const menuBar  = document.querySelector('.menu-bar');
+      let   lastScroll = window.pageYOffset;
+
+      // on load: menu sits under the header
+      menuBar.classList.add('initial');
+
+      window.addEventListener('scroll', () => {
+        const current = window.pageYOffset;
+
+        if (current > lastScroll && current > header.offsetHeight) {
+          // scrolling DOWN past the header → hide header, pin menu to top
+          header.classList.add('hidden');
+          menuBar.classList.remove('initial');
+          menuBar.style.top = '0';
+        } else if (current < lastScroll) {
+          // scrolling UP → show header again, push menu back down
+          header.classList.remove('hidden');
+          menuBar.classList.add('initial');
+          menuBar.style.top = header.offsetHeight + 'px';
+        }
+
+        lastScroll = current;
+      });
+    </script> 
+  </body>
+</html>
